@@ -1,0 +1,14 @@
+target/
+lib_managed/
+src_managed/
+project/boot/
+.history
+.cache
+
+.ensime*
+
+*.sublime-project
+*.sublime-workspace
+
+*.html
+*.json
