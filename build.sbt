@@ -4,6 +4,8 @@ scalaVersion in ThisBuild := "2.11.8"
 
 scalacOptions in ThisBuild ++= Seq("-deprecation", "-feature")
 
+scalafmtConfig in ThisBuild := Some(file(".scalafmt"))
+
 lazy val root = project.in(file(".")).
   aggregate(lmsvizJS, lmsvizJVM, macro).
   dependsOn(macro).

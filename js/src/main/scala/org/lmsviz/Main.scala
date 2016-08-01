@@ -13,16 +13,16 @@ object Main extends js.JSApp {
 
   import model.lms._
   val trace = {
-    
+
     // Want to do this : CompilationTrace.fromFile("compilation.json")
-    
+
     // Have to do this instead
     import io.circe.generic.auto._
     import io.circe.parser._
 
     val content: String = Macro.fileContentAsString("compilation.json")
 
-    decode[Seq[TransformInfo]](content).leftMap { error => 
+    decode[Seq[TransformInfo]](content).leftMap { error =>
       println(error.getMessage)
       println(error.toString)
       sys.error("Cannot parse json ast")

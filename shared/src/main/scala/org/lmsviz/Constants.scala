@@ -1,5 +1,5 @@
 package org.lmsviz
 
 object Constants {
-	val ReactContainerID = "ReactMain"
+  val ReactContainerID = "ReactMain"
 }

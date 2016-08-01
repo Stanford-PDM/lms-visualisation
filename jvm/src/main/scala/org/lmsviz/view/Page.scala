@@ -1,4 +1,1 @@
-
-object Page {
-	
-}
+object Page {}

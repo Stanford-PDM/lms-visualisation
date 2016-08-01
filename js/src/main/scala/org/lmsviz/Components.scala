@@ -34,6 +34,9 @@ object Components {
       def prefix = withClass("prefix")
 
       def disabled(bool: Boolean = true) = if (bool) withClass("disabled") else d
+
+      def valignWrapper = withClass("valign-wrapper")
+      def valigned = withClass("valign")
     }
 
     object btn {
@@ -81,7 +84,7 @@ object Components {
       def render(props: Props, state: State) = {
         val stm = props.stm
 
-        li(div(
+        li(key := stm.id)(div(
           classSet1(
             "collapsible-header truncate",
             Styles.stm(props.level).htmlClass -> true,
@@ -112,11 +115,11 @@ object Components {
       def render(props: Props, state: State) = {
         val statements = props.statements
 
-        def renderStatement(stm: StmInfo, level: Int): Seq[TagMod] = {
+        def renderStatement(stm: StmInfo, level: Int): Seq[ReactNode] = {
           val isFocused = props.focusedStm.contains(stm)
           val isRelated = props.focusedStm.exists(stm.isRelated)
 
-          val tag: TagMod = Stm(stm, props.handleSelect, isFocused, isRelated, level) // force implicit conversion, TODO: find what is happening 
+          val tag = Stm(stm, props.handleSelect, isFocused, isRelated, level) 
 
           if (props.open.contains(stm)) {
             // render children
@@ -127,7 +130,8 @@ object Components {
         }
 
         ul(Seq(classSet1(Styles.ast.htmlClass), data.collapsible := "expandable"))(
-          statements.flatMap(renderStatement(_, 0)): _*)
+          // force implicit conversion, TODO: find what is happening 
+          statements.flatMap(renderStatement(_, 0)).map(x => { val t: TagMod = x; t }): _*)
       }
     }
 
@@ -197,10 +201,10 @@ object Components {
           }
           print(0, loc)
         }
-      } >> $.props >>= { p => 
+      } >> $.props >>= { p =>
         val related = getAllRelated(stm, p.allStatements)
         val parents = related.flatMap(p.getParents)
-        $.modState(updateState(_, stm, parents)) 
+        $.modState(updateState(_, stm, parents))
       }
 
       def render(props: Props, state: State) = {
@@ -246,11 +250,11 @@ object Components {
           row(
             col.s(4).offsetS(4).centered(
               h3(
-                btn(btn.large, btn.floating).disabled(idx == 0)(onClick --> handlePrev)(
-                  micon("arrow_back")).left,
+                btn(btn.large, btn.floating).disabled(idx == 0).valignWrapper(onClick --> handlePrev)(
+                  micon("arrow_back").valigned).left,
                 currentTransform.name,
-                btn(btn.large, btn.floating).disabled(idx == (transforms.length - 1))(onClick --> handleNext)(
-                  micon("arrow_forward")).right)),
+                btn(btn.large, btn.floating).disabled(idx == (transforms.length - 1)).valignWrapper(onClick --> handleNext)(
+                  micon("arrow_forward").valigned).right)),
             col.s(12)(Transform(currentTransform))))
       }
     }
