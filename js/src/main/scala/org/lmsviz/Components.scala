@@ -130,7 +130,7 @@ object Components {
         }
 
         ul(Seq(classSet1(Styles.ast.htmlClass), data.collapsible := "expandable"))(
-          // force implicit conversion, TODO: find what is happening 
+          // force implicit conversion, TODO: find what is happening
           statements.flatMap(renderStatement(_, 0)).map(x => { val t: TagMod = x; t }): _*)
       }
     }
