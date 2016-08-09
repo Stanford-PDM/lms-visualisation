@@ -5,7 +5,6 @@ REMOTE="/Users/dengels/Documents/EPFL/PDM/Projects/mine-hyperdsl/trace.json"
 LOCAL="compilation.json"
 TOREMOVE="js/target/scala-2.11/classes/org/lmsviz/Main"
 
-CHANGE=$(diff -q "$REMOTE" "$LOCAL")
 
 MINIFIED="compilation.min.json"
 
@@ -29,7 +28,9 @@ function compile(){
   sbt "; lmsvizJS/fastOptJS; lmsvizJVM/run";
 }
 
-if [ -n "$CHANGE" ]; then
+# Check is file is not empty and has changed
+CHANGE=$(diff -q "$REMOTE" "$LOCAL")
+if [ -s "$REMOTE" -a -n "$CHANGE" ]; then
   echo "File changed, recompile...";
   copy && minify && compile;
 else

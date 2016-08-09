@@ -18,7 +18,7 @@ case class SourceLocation(file: String, line: Int, offset: Int,
       parent: Option[SourceLocation])
 ```
 
-There is currently only support for JSON serialization, using circe's automatic decoders.
+There is currently only support for JSON serialization, using [circe](https://github.com/travisbrown/circe)'s automatic decoders.
 
 
 
