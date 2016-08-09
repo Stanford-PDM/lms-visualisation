@@ -34,5 +34,5 @@ if [ -s "$REMOTE" -a -n "$CHANGE" ]; then
   echo "File changed, recompile...";
   copy && minify && compile;
 else
-  echo "File hasn't changed, do nothing...";
+  echo -n ".";
 fi

@@ -21,6 +21,6 @@ object Macro {
 
     // Split the string into pieces of small enough length to encode in scala-js
     val pieces = content.grouped((1 << 8) - 1).toSeq
-    c.Expr(q"Seq(..$pieces).reduce(_ + _)")
+    c.Expr(q"Seq[String](..$pieces).reduce[String](_ + _)")
   }
 }
