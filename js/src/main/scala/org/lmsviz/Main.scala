@@ -20,7 +20,7 @@ object Main extends js.JSApp {
     import io.circe.generic.auto._
     import io.circe.parser._
 
-    val content: String = Macro.fileContentAsString("compilation.json")
+    val content: String = Macro.fileContentAsString("compilation.min.json")
 
     decode[Seq[TransformInfo]](content).leftMap { error =>
       println(error.getMessage)

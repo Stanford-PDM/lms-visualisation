@@ -248,11 +248,11 @@ object Components {
         val currentTransform = transforms(idx)
         section(
           row(
-            col.s(4).offsetS(4).centered(
+            col.s(8).offsetS(2).centered(
               h3(
                 btn(btn.large, btn.floating).disabled(idx == 0).valignWrapper(onClick --> handlePrev)(
                   micon("arrow_back").valigned).left,
-                currentTransform.name,
+                s"#${idx + 1}: ${currentTransform.name}",
                 btn(btn.large, btn.floating).disabled(idx == (transforms.length - 1)).valignWrapper(onClick --> handleNext)(
                   micon("arrow_forward").valigned).right)),
             col.s(12)(Transform(currentTransform))))

@@ -17,9 +17,17 @@ object lms {
   case class StmInfo(id: Int, repr: String, pos: Seq[SourceLocation],
       comments: Seq[String], parentId: Option[Int],
       childrens: Seq[StmInfo] = Seq.empty) {
+
+
+    private def len(s: SourceLocation) : Int = s.parent match {
+      case None => 1
+      case Some(p) => len(p) + 1
+    }
+
     def isRelated(other: StmInfo): Boolean = {
-      val p1 = pos.head
-      val p2 = other.pos.head
+      // TODO: understand why there are many positions, for now just take longest
+      val p1 = pos.sortBy(-len(_)).head
+      val p2 = other.pos.sortBy(-len(_)).head
       if (pos.length != 1)
         println(
             s"Warning, $id position doenst have only one history ${pos.length}")
