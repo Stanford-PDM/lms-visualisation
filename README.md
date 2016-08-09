@@ -3,6 +3,25 @@
 This project is aimed at providing useful insights into lms staging pipelines.
 It provides in browser interactive visualisations of chains of transformations and helps understand what are the kind of operations each transformation is performing.
 
+## Usage
+To use, create a `compilation.min.json` file with the right format (see below). Then run:
+
+```bash
+sbt "; lmsvizJS/fastOptJS; lmsvizJVM/run";
+```
+
+This should generate an `index.html` file that you can open in your favorite browser.
+
+You should get something that looks like this:
+![showcase](showcase.png)
+
+## Features
+- Every statement is clickable and will display all it's information in the overhead box
+- Clicking on statements that contain sub scopes will expand them
+- Clicking on any statement will make the statement appear beige and all related* statements appear grey
+
+*Related statements are discovered through the source context information. Since we are treating the transformers as black boxes, this is a good (although not exact) way to approximate which transformed statement on the right corresponds to the original statement on the left (and vice versa).
+
 ## Trace format
 To create a visualisation, we first have to generate an lms execution trace. The trace is just a sequence of `TransformInfo` objects that constitute the compilation. The full model is described in [org.lmsviz.model.lms](https://github.com/Stanford-PDM/lms-visualisation/blob/master/shared/src/main/scala/org/lmsviz/model/lms.scala) :
 
@@ -24,7 +43,6 @@ There is currently only support for JSON serialization, using [circe](https://gi
 
 ## lms support
 You can automatically generate the right trace format by using: [ExportTransforms.scala](https://github.com/Stanford-PDM/virtualization-lms-core/blob/dengels-fusion/src/util/ExportTransforms.scala)
-
 
 ## Caveats
 The javascript VM doens't provide access to the local filesystem, so there are two solutions to load the trace:
