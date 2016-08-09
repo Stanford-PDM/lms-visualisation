@@ -18,9 +18,8 @@ object lms {
       comments: Seq[String], parentId: Option[Int],
       childrens: Seq[StmInfo] = Seq.empty) {
 
-
-    private def len(s: SourceLocation) : Int = s.parent match {
-      case None => 1
+    private def len(s: SourceLocation): Int = s.parent match {
+      case None    => 1
       case Some(p) => len(p) + 1
     }
 
