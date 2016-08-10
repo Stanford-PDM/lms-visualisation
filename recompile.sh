@@ -2,11 +2,11 @@
 #set -x
 
 REMOTE="/Users/dengels/Documents/EPFL/PDM/Projects/mine-hyperdsl/trace.json"
-LOCAL="compilation.json"
+LOCAL="trace.json"
 TOREMOVE="js/target/scala-2.11/classes/org/lmsviz/Main"
 
 
-MINIFIED="compilation.min.json"
+MINIFIED="trace.min.json"
 
 function copy(){
   cp "$REMOTE" "$LOCAL";

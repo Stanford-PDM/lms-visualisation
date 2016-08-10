@@ -5,8 +5,7 @@ import scalacss.Defaults._
 object Styles extends StyleSheet.Inline {
   import dsl._
 
-  val stm = styleF
-    .int(0 to 100)(i => styleS(borderLeft((i * 10).px, solid, gainsboro)))
+  val stm = styleF.int(0 to 100)(i => styleS(borderLeft((i * 10).px, solid, gainsboro)))
 
   val ast = style(addClassName("collapsible"), boxShadow := none)
 

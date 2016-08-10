@@ -4,7 +4,7 @@ This project is aimed at providing useful insights into lms staging pipelines.
 It provides in browser interactive visualisations of chains of transformations and helps understand what are the kind of operations each transformation is performing.
 
 ## Usage
-To use, create a `compilation.min.json` file with the right format (see below). Then run:
+To use, create a `trace.min.json` file with the right format (see below). Then run:
 
 ```bash
 sbt "; lmsvizJS/fastOptJS; lmsvizJVM/run";
@@ -39,15 +39,11 @@ To solve it we created two scripts that you can run to recompile the code:
 To create a visualisation, we first have to generate an lms execution trace. The trace is just a sequence of `TransformInfo` objects that constitute the compilation. The full model is described in [org.lmsviz.model.lms](https://github.com/Stanford-PDM/lms-visualisation/blob/master/shared/src/main/scala/org/lmsviz/model/lms.scala) :
 
 ```scala
-case class TransformInfo(name: String, before: Seq[StmInfo], 
-      after: Seq[StmInfo])
-
-case class StmInfo(id: Int, repr: String, pos: Seq[SourceLocation],
-      comments: Seq[String], parentId: Option[Int],
-      childrens: Seq[StmInfo])
-      
-case class SourceLocation(file: String, line: Int, offset: Int,
-      parent: Option[SourceLocation])
+case class SourceLocation(file: String, line: Int, offset: Int)
+case class StmInfo(id: Int, repr: String, pos: Seq[Seq[SourceLocation]], comments: Map[String, String])
+case class IRNode(stmId: Int, parent: Option[IRNode], children: Seq[IRNode])
+case class TransformInfo(name: String, before: Seq[IRNode], after: Seq[IRNode])
+case class Trace(transforms: Seq[TransformInfo], fullGraph: Seq[StmInfo])
 ```
 
 There is currently only support for JSON serialization, using [circe](https://github.com/travisbrown/circe)'s automatic decoders.
