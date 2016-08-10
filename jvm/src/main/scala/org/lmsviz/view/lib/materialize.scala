@@ -9,8 +9,7 @@ object materialize {
   val Row = Div(classes = Seq("row"))
 
   object Column {
-    private def column(prefix: String, size: Int, offset: Int,
-        cls: Seq[String]) = offset match {
+    private def column(prefix: String, size: Int, offset: Int, cls: Seq[String]) = offset match {
       case 0 => Div(classes = Seq("col", s"$prefix$size") ++ cls)
       case n =>
         Div(classes = Seq("col", s"$prefix$size", s"offset-$prefix$n") ++ cls)
